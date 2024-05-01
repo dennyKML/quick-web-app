@@ -1,0 +1,30 @@
+:root {
+    --header-color: #7000B5;
+    --header-hover-color: #43006D;
+    --main-color: #5A0092;
+    --some-text: #FFFFFF;
+    --footer-bg: #E6E6FA;
+    --footer-text: #000000;
+    --footer-list: #5A5A5A;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+body {
+    font-family: "Roboto Flex", sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+}
