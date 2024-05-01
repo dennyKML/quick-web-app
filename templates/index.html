@@ -4,101 +4,238 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Денис Пиписка</title>
+    <title>Головна</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap"
-        rel="stylesheet">
+          rel="stylesheet">
     <link rel="stylesheet" href="../static/css/global.css">
     <link rel="stylesheet" href="../static/css/components.css">
     <link rel="stylesheet" href="../static/css/header.css">
     <link rel="stylesheet" href="../static/css/main.css">
     <link rel="stylesheet" href="../static/css/footer.css">
+
+    <script src="../static/js/homepage/slow_move.js"></script>
 </head>
 
 <body>
-    <header class="header">
-        <div class="header__wrapper">
-            <a href="index.html" class="header__logo">Quick</a>
-            <div class="header__navwrapper">
-                <nav>
-                    <ul class="menu">
-                        <li class="menu__item"><a href="#">Послуги</a></li>
-                        <li class="menu__item"><a href="#">Тарифи</a></li>
-                        <li class="menu__item"><a href="#">Контакти</a></li>
-                    </ul>
-                </nav>
-                <button class="button header__login">Реєстрація</button>
-                <button class="button header__logout">
-                    <svg width="50px" height="50px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path id="header__svg" fill-rule="evenodd" id="svg-path" clip-rule="evenodd"
-                            d="M8 6C8 3.79086 9.79086 2 12 2H17.5C19.9853 2 22 4.01472 22 6.5V17.5C22 19.9853 19.9853 22 17.5 22H12C9.79086 22 8 20.2091 8 18V17C8 16.4477 8.44772 16 9 16C9.55228 16 10 16.4477 10 17V18C10 19.1046 10.8954 20 12 20H17.5C18.8807 20 20 18.8807 20 17.5V6.5C20 5.11929 18.8807 4 17.5 4H12C10.8954 4 10 4.89543 10 6V7C10 7.55228 9.55228 8 9 8C8.44772 8 8 7.55228 8 7V6ZM12.2929 8.29289C12.6834 7.90237 13.3166 7.90237 13.7071 8.29289L16.7071 11.2929C17.0976 11.6834 17.0976 12.3166 16.7071 12.7071L13.7071 15.7071C13.3166 16.0976 12.6834 16.0976 12.2929 15.7071C11.9024 15.3166 11.9024 14.6834 12.2929 14.2929L13.5858 13L5 13C4.44772 13 4 12.5523 4 12C4 11.4477 4.44772 11 5 11L13.5858 11L12.2929 9.70711C11.9024 9.31658 11.9024 8.68342 12.2929 8.29289Z"
-                            fill="#0F1729" />
-                    </svg>
-                </button>
+<header class="header">
+    <div class="header__wrapper">
+        <a href="{{ url_for('index') }}" class="header__logo">Quick</a>
+        <div class="header__navwrapper">
+            <nav>
+                <ul class="menu">
+                    <li class="menu__item"><a href="#services">Послуги</a></li>
+                    <li class="menu__item"><a href="#tariffs">Тарифи</a></li>
+                    <li class="menu__item"><a href="#footer">Контакти</a></li>
+                </ul>
+            </nav>
+            <button class="button header__register">Реєстрація</button>
+            <button class="button header__login">
+                <svg width="50px" height="50px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path id="header__svg" fill-rule="evenodd" clip-rule="evenodd"
+                          d="M8 6C8 3.79086 9.79086 2 12 2H17.5C19.9853 2 22 4.01472 22 6.5V17.5C22 19.9853 19.9853 22 17.5 22H12C9.79086 22 8 20.2091 8 18V17C8 16.4477 8.44772 16 9 16C9.55228 16 10 16.4477 10 17V18C10 19.1046 10.8954 20 12 20H17.5C18.8807 20 20 18.8807 20 17.5V6.5C20 5.11929 18.8807 4 17.5 4H12C10.8954 4 10 4.89543 10 6V7C10 7.55228 9.55228 8 9 8C8.44772 8 8 7.55228 8 7V6ZM12.2929 8.29289C12.6834 7.90237 13.3166 7.90237 13.7071 8.29289L16.7071 11.2929C17.0976 11.6834 17.0976 12.3166 16.7071 12.7071L13.7071 15.7071C13.3166 16.0976 12.6834 16.0976 12.2929 15.7071C11.9024 15.3166 11.9024 14.6834 12.2929 14.2929L13.5858 13L5 13C4.44772 13 4 12.5523 4 12C4 11.4477 4.44772 11 5 11L13.5858 11L12.2929 9.70711C11.9024 9.31658 11.9024 8.68342 12.2929 8.29289Z"
+                          fill="#0F1729">
+                    </path>
+                </svg>
+            </button>
+        </div>
+    </div>
+</header>
+
+<section class="section">
+    <div class="hero">
+        <div class="hero-info">
+            <h1 class="hero-info__h1">Quick</h1>
+            <p class="hero-info__p">Швидка доставка майбутнього</p>
+        </div>
+        <form action="#" class="hero-form">
+            <input type="email" placeholder="Введіть електронну адресу" class="input hero-form__input">
+            <button class="button hero-form__button">Відстежити</button>
+        </form>
+    </div>
+</section>
+
+<section class="section" id="services">
+    <div class="category">
+        <button class="service-button">
+            <svg class="service-icon" fill="#5A0092" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                 xmlns:xlink="http://www.w3.org/1999/xlink"
+                 width="200px" height="200px" viewBox="0 0 537.871 537.871"
+                 xml:space="preserve">
+                <g>
+                    <path d="M426.985,0H110.734C98.876,0,89.237,9.562,89.237,21.497v494.878c0,11.857,9.716,21.496,21.497,21.496h316.404
+                        c11.857,0,21.496-9.562,21.496-21.496V21.573C448.558,9.716,438.995,0,426.985,0z M125.116,44.523c0-4.819,3.825-8.645,8.568-8.645
+                        h269.051c4.818,0,8.645,3.825,8.645,8.645v126.378c0,4.82-3.826,8.645-8.645,8.645H133.684c-4.819,0-8.568-3.825-8.568-8.645
+                        V44.523z M411.685,223.763v54.468c0,4.82-3.824,8.645-8.645,8.645h-54.467c-4.82,0-8.645-3.824-8.645-8.645v-54.544
+                        c0-4.819,3.824-8.645,8.645-8.645h54.467C407.86,215.195,411.685,219.02,411.685,223.763z M196.796,493.426
+                        c0,4.818-3.825,8.645-8.645,8.645h-54.544c-4.819,0-8.568-3.826-8.568-8.645v-54.545c0-4.82,3.825-8.645,8.568-8.645h54.544
+                        c4.82,0,8.645,3.824,8.645,8.645V493.426z M196.796,385.865c0,4.82-3.825,8.645-8.645,8.645h-54.544
+                        c-4.819,0-8.568-3.824-8.568-8.645v-54.543c0-4.82,3.825-8.645,8.568-8.645h54.544c4.82,0,8.645,3.824,8.645,8.645V385.865z
+                         M196.796,278.307c0,4.82-3.825,8.645-8.645,8.645h-54.544c-4.819,0-8.568-3.824-8.568-8.645v-54.544
+                        c0-4.819,3.825-8.645,8.568-8.645h54.544c4.82,0,8.645,3.825,8.645,8.645V278.307z M304.356,493.426
+                        c0,4.818-3.826,8.645-8.645,8.645h-54.545c-4.819,0-8.645-3.826-8.645-8.645v-54.545c0-4.82,3.825-8.645,8.645-8.645h54.545
+                        c4.818,0,8.645,3.824,8.645,8.645V493.426z M304.356,385.865c0,4.82-3.826,8.645-8.645,8.645h-54.545
+                        c-4.819,0-8.645-3.824-8.645-8.645v-54.543c0-4.82,3.825-8.645,8.645-8.645h54.545c4.818,0,8.645,3.824,8.645,8.645V385.865z
+                         M304.356,278.307c0,4.82-3.826,8.645-8.645,8.645h-54.545c-4.819,0-8.645-3.824-8.645-8.645v-54.544
+                        c0-4.819,3.825-8.645,8.645-8.645h54.545c4.818,0,8.645,3.825,8.645,8.645V278.307z M340.005,331.398
+                        c0-4.82,3.824-8.645,8.645-8.645h54.545c4.818,0,8.645,3.824,8.645,8.645v54.467c0,4.82-3.826,8.645-8.645,8.645h-54.545
+                        c-4.82,0-8.645-3.824-8.645-8.645V331.398L340.005,331.398z M411.991,493.426c0,4.818-3.824,8.645-8.645,8.645h-54.545
+                        c-4.818,0-8.645-3.826-8.645-8.645v-54.545c0-4.82,3.826-8.645,8.645-8.645h54.545c4.82,0,8.645,3.824,8.645,8.645V493.426z">
+                    </path>
+                </g>
+            </svg>
+        </button>
+        <span class="service-text">Розрахувати</span>
+    </div>
+
+    <div class="category">
+        <button class="service-button">
+            <svg class="service-icon" width="200px" height="200px" viewBox="0 0 12 12" id="Layer_1" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <polygon class="polygon" fill="#5A0092" points="2.75,3.815918 8.190918,1.095459 6,0 0.559082,2.720459   "></polygon>
+                <polygon class="polygon" fill="#5A0092" points="9.309082,1.654541 3.8681641,4.375 6,5.440918 11.440918,2.720459   "></polygon>
+                <polygon class="polygon" fill="#5A0092" points="5.5,6.309082 0,3.559082 0,9.25 5.5,12   "></polygon>
+                <polygon class="polygon" fill="#5A0092" points="6.5,6.309082 6.5,12 12,9.25 12,3.559082   "></polygon>
+            </svg>
+        </button>
+        <span class="service-text">Створити</span>
+    </div>
+
+    <div class="text-paragraph text-left">
+        <h2 class="service-title left-title">Хто ми такі?</h2>
+        <p class="service-description">
+            Quick — ваш швидкісний міст між адресами, що гарантує безпечну та оперативну доставку
+        </p>
+    </div>
+
+    <div class="text-paragraph text-right">
+        <h2 class="service-title right-title">Чому ми?</h2>
+        <p class="service-description">
+            Quick — втілення інноваційності та зручності у кожному відправлені, що надає вам перевагу в часі та комфорті
+        </p>
+    </div>
+
+    <div class="category">
+        <button class="service-button">
+            <svg class="service-icon" fill="#5A0092" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                 width="200px" height="200px" viewBox="0 0 527.678 527.678"
+                 xml:space="preserve">
+                <g>
+                    <g>
+                        <path d="M263.877,0C169.782,0,93.512,76.271,93.512,170.213c0,93.941,159.197,349.834,159.197,349.834
+                            c6.196,10.175,16.217,10.175,22.338,0c0,0,159.119-255.816,159.119-349.834C434.166,76.194,357.973,0,263.877,0z M263.877,264.537
+                            c-61.583,0-111.384-49.878-111.384-111.384c0-61.506,49.801-111.461,111.384-111.461c61.582,0,111.384,49.878,111.384,111.384
+                            S325.459,264.537,263.877,264.537z"></path>
+                        <ellipse cx="263.877" cy="153.153" rx="69.844" ry="69.844"></ellipse>
+                    </g>
+                </g>
+            </svg>
+        </button>
+        <span class="service-text">Відстежити</span>
+    </div>
+
+    <div class="category">
+        <button class="service-button">
+            <svg class="service-icon" fill="#5A0092" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                 width="200px" height="200px" viewBox="0 0 547.596 547.596"
+                 xml:space="preserve">
+                <g>
+                    <path d="M540.76,254.788L294.506,38.216c-11.475-10.098-30.064-10.098-41.386,0L6.943,254.788
+                        c-11.475,10.098-8.415,18.284,6.885,18.284h75.964v221.773c0,12.087,9.945,22.108,22.108,22.108h92.947V371.067
+                        c0-12.087,9.945-22.108,22.109-22.108h93.865c12.239,0,22.108,9.792,22.108,22.108v145.886h92.947
+                        c12.24,0,22.108-9.945,22.108-22.108v-221.85h75.965C549.021,272.995,552.081,264.886,540.76,254.788z"></path>
+                </g>
+            </svg>
+        </button>
+        <span class="service-text">Відділення</span>
+    </div>
+</section>
+
+<div class="hero-tariffs">
+    <h1 class="hero-info__h1">Тарифи</h1>
+</div>
+
+<section class="section" id="tariffs">
+    <div class="tariff">
+        <h2 class="tariff-title" id="tariff-1">СТАНДАРТ</h2>
+
+        <div class="tariff-description">
+            <p class="tariff-description-unit" id="time">3-5 днів</p>
+            <p class="tariff-description-unit" id="value">від 50 грн</p>
+            <p class="tariff-description-unit" id="weight">до 10 кг</p>
+            <p class="tariff-description-unit" id="little-description">Доступна ціна для повсякденних потреб</p>
+        </div>
+    </div>
+
+    <div class="tariff">
+        <h2 class="tariff-title" id="tariff-2">ЕКСПРЕС</h2>
+
+        <div class="tariff-description">
+            <p class="tariff-description-unit" id="time">1-2 дні</p>
+            <p class="tariff-description-unit" id="value">від 100 грн</p>
+            <p class="tariff-description-unit" id="weight">до 10 кг</p>
+            <p class="tariff-description-unit" id="little-description">Швидка доставка для термінових відправлень</p>
+        </div>
+    </div>
+
+    <div class="tariff">
+        <h2 class="tariff-title" id="tariff-3">БІЗНЕС</h2>
+
+        <div class="tariff-description">
+            <p class="tariff-description-unit" id="time">1-3 днів</p>
+            <p class="tariff-description-unit" id="value">від 150 грн</p>
+            <p class="tariff-description-unit" id="weight">до 50 кг</p>
+            <p class="tariff-description-unit" id="little-description">Гнучкі рішення для комерційних відправлень</p>
+        </div>
+    </div>
+</section>
+
+<footer class="footer" id="footer">
+    <div class="footer__wrapper">
+        <div class="footer__info">
+            <div class="footer__column">
+                <div class="footer__menu-header">Контактні дані:</div>
+                <ul class="menu-footer">
+                    <li class="menu-footer__item">+380 66 288 1705</li>
+                    <li class="menu-footer__item">quick.support@quick.com</li>
+                    <li class="menu-footer__item">м. Запоріжжя, просп. Соборний 130</li>
+                </ul>
+            </div>
+
+            <div class="footer__column">
+                <div class="footer__menu-header uniq-first">Підписатися на новини:</div>
+
+                <form action="#" class="form-email">
+                    <input type="email" placeholder="Введіть електронну адресу" class="input form-email__input">
+                    <button class="button form-email__button">Підписатися</button>
+                </form>
+
+            </div>
+
+            <div class="footer__column">
+                <div class="footer__menu-header uniq-second">Наші соціальні мережі:</div>
+                <div class="footer__icon">
+                    <a href="https://www.facebook.com/"><img src="../static/img/homepage/facebook.svg"
+                                                             alt="Посилання на facebook"></a>
+                    <a href="https://www.instagram.com/"><img src="../static/img/homepage/inst.svg"
+                                                              alt="Посилання на instagram"></a>
+                    <a href="https://web.telegram.org/a/"><img src="../static/img/homepage/telegram.svg"
+                                                               alt="Посилання на telegram"></a>
+                    <a href="https://twitter.com/"><img src="../static/img/homepage/twitter.svg"
+                                                        alt="Посилання на twitter"></a>
+                    <a href="https://www.tiktok.com/"><img src="../static/img/homepage/tiktok.svg"
+                                                           alt="Посилання на tiktok"></a>
+                    <a href="https://www.youtube.com/"><img src="../static/img/homepage/youtube.svg"
+                                                            alt="Посилання на youtube"></a>
+                </div>
             </div>
         </div>
-    </header>
 
-    <section class="section">
-        <div class="hero">
-            <div class="hero-info">
-                <h1 class="hero-info__h1">Quick</h1>
-                <p class="hero-info__p">Швидка доставка майбутнього</p>
-            </div>
-            <form action="#" class="hero-form">
-                <input type="email" placeholder="Введіть електронну адресу" class="input hero-form__input">
-                <button class="button hero-form__button">Відстежити</button>
-            </form>
+        <div class="footer__copywrite">© 2024 Quick. Всі права захищені. Ваш надійний партнер у світі поштових
+            послуг
         </div>
-    </section>
-
-    <footer class="footer">
-        <div class="footer__wrapper">
-            <div class="footer__info">
-                <div class="footer__column">
-                    <div class="footer__menu-header">Контактні дані:</div>
-                    <ul class="menu-footer">
-                        <li class="menu-footer__item">+380 66 288 1705</li>
-                        <li class="menu-footer__item">quick.support@quick.com</li>
-                        <li class="menu-footer__item">м. Запоріжжя, просп. Соборний 130</li>
-                    </ul>
-                </div>
-
-                <div class="footer__column">
-                    <div class="footer__menu-header uniq-first">Підписатися на новини:</div>
-
-                    <form action="#" class="form-email">
-                        <input type="email" placeholder="Введіть електронну адресу" class="input form-email__input">
-                        <button class="button form-email__button">Підписатися</button>
-                    </form>
-
-                </div>
-
-                <div class="footer__column">
-                    <div class="footer__menu-header uniq-second">Наші соціальні мережі:</div>
-                    <div class="footer__icon">
-                        <a href="https://www.facebook.com/"><img src="../static/img/homepage/facebook.svg"
-                                alt="Посилання на facebook"></a>
-                        <a href="https://www.instagram.com/"><img src="../static/img/homepage/inst.svg"
-                                alt="Посилання на instagram"></a>
-                        <a href="https://web.telegram.org/a/"><img src="../static/img/homepage/telegram.svg"
-                                alt="Посилання на telegram"></a>
-                        <a href="https://twitter.com/"><img src="../static/img/homepage/twitter.svg"
-                                alt="Посилання на twitter"></a>
-                        <a href="https://www.tiktok.com/"><img src="../static/img/homepage/tiktok.svg"
-                                alt="Посилання на tiktok"></a>
-                        <a href="https://www.youtube.com/"><img src="../static/img/homepage/youtube.svg"
-                                alt="Посилання на youtube"></a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="footer__copywrite">© 2024 Quick. Всі права захищені. Ваш надійний партнер у світі поштових
-                послуг
-            </div>
-        </div>
-    </footer>
+    </div>
+</footer>
 </body>
 
 </html>
