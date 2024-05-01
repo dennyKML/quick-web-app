@@ -39,7 +39,7 @@
     color: var(--header-hover-color);
 }
 
-.header__login {
+.header__register {
     font-size: 24px;
     padding: 14px 16px;
     border-radius: 20px;
@@ -48,11 +48,11 @@
     color: var(--some-text);
 }
 
-.header__login:hover {
+.header__register:hover {
     background-color: var(--header-hover-color);
 }
 
-.header__logout {
+.header__login {
     width: 50px;
     height: 50px;
 }
