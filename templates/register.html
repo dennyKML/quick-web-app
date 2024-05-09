@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Реєстрація</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/global.css">
+    <link rel="stylesheet" href="../static/css/components.css">
+    <link rel="stylesheet" href="../static/css/register_login.css">
+</head>
+
+<body class="body">
+
+<div class="register-form">
+    <form method="post" action="{{ url_for('register') }}">
+        {{ form.csrf_token }}
+        <h1>Реєстрація</h1>
+        <input type="text" name="firstname" placeholder="Ім'я" required>
+        <input type="text" name="lastname" placeholder="Прізвище" required>
+        <input type="text" name="midname" placeholder="По батькові">
+        <input type="text" name="phone" placeholder="Номер телефону" required>
+        <input type="text" name="email" placeholder="Email" required>
+        <input type="password" name="password" placeholder="Пароль" required>
+        <button type="submit" name="submit">Зареєструватися</button>
+    </form>
+</div>
+
+<script>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                alert("{{ message }}");
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+</script>
+
+</body>
+
+</html>
