@@ -5,36 +5,35 @@
     height: 100vh;
 }
 
-.register-form {
-    width: 691px;
-    height: 629px;
+.register-form, .login-form {
     border-radius: 20px;
     background-color: var(--footer-bg);
     padding: 30px;
 }
 
-.register-form form {
+.register-form form, .login-form form {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 25px;
 }
 
-.register-form h1 {
+.register-form h1, .login-form h1 {
     margin: 0;
     font-weight: 800;
 }
 
-.register-form input {
+.register-form input, .login-form input {
     width: 631px;
     height: 50px;
     background-color: var(--some-text);
     border-radius: 20px;
     border: 2px solid #7A7A7A;
     padding: 15px;
+    font-size: 24px;
 }
 
-.register-form button {
+.register-form button, .login-form button {
     width: 228px;
     height: 56px;
     background-color: var(--header-color);
@@ -48,6 +47,6 @@
     transition: all 0.3s ease;
 }
 
-.register-form button:hover {
+.register-form button:hover, .login-form button:hover {
     background-color: var(--header-hover-color);
 }
