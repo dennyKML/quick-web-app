@@ -187,9 +187,8 @@
 /*Стилі для тарифів*/
 
 #tariffs {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 40px 100px;
+    display: flex;
+    gap: 40px;
     justify-content: center;
     padding: 90px 260px 180px;
 }
