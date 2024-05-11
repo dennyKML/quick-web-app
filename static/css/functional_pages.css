@@ -64,7 +64,8 @@
 
 .from-to-container,
 .dimension-container,
-.receiver-data-container {
+.receiver-data-container,
+.package-num-container {
     display: flex;
     gap: 25px;
     justify-content: center;
@@ -75,7 +76,8 @@
 .single-spec-container,
 .tariff-container,
 .receiver-name,
-.receiver-phone {
+.receiver-phone,
+.package-num {
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -86,7 +88,8 @@
 .single-spec-container label,
 .tariff-container label,
 .receiver-name label,
-.receiver-phone label {
+.receiver-phone label,
+.package-num label {
     font-size: 23px; /* Тут мало б бути 24 пікселі, проти опера не відображає як треба */
     color: var(--some-text);
 }
@@ -103,7 +106,8 @@
 
 .single-spec-container input,
 .receiver-name input,
-.receiver-phone input {
+.receiver-phone input,
+.package-num input {
     width: 200px;
     height: 80px;
     border-radius: 20px;
@@ -122,7 +126,7 @@
     width: 700px;
 }
 
-#phone {
+#phone, #number-of-package {
     width: 400px;
 }
 

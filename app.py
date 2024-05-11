@@ -89,5 +89,10 @@ def create_page():
     return render_template('create_page.html', current_user=current_user)
 
 
+@app.route('/locate-package')
+def locate_package():
+    return render_template('locate_package.html', current_user=current_user)
+
+
 if __name__ == '__main__':
     app.run()
