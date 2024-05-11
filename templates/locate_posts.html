@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Знайти відділення</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/global.css">
+    <link rel="stylesheet" href="../static/css/components.css">
+    <link rel="stylesheet" href="../static/css/header.css">
+    <link rel="stylesheet" href="../static/css/functional_pages.css">
+    <link rel="stylesheet" href="../static/css/footer.css">
+</head>
+
+<body>
+<header class="header">
+    <div class="header__wrapper">
+        <a href="/" class="header__logo">Quick</a>
+        <div class="header__navwrapper">
+            <nav>
+                <ul class="menu">
+                    <li class="menu__item"><a href="#services">Послуги</a></li>
+                    <li class="menu__item"><a href="#tariffs">Тарифи</a></li>
+                    <li class="menu__item"><a href="#footer">Контакти</a></li>
+                </ul>
+            </nav>
+            {% if current_user.is_authenticated %}
+                <a href="{{ url_for('profile') }}" class="button header__profile">
+                    <svg width="50px" height="50px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path id="header__svg" fill-rule="evenodd" clip-rule="evenodd"
+                              d="M12 5C10.3431 5 9 6.34315 9 8C9 9.65685 10.3431 11 12 11C13.6569 11 15 9.65685 15 8C15 6.34315 13.6569 5 12 5ZM7 8C7 5.23858 9.23858 3 12 3C14.7614 3 17 5.23858 17 8C17 10.7614 14.7614 13 12 13C9.23858 13 7 10.7614 7 8ZM7.45609 16.7264C6.40184 17.1946 6 17.7858 6 18.5C6 18.7236 6.03976 18.8502 6.09728 18.942C6.15483 19.0338 6.29214 19.1893 6.66219 19.3567C7.45312 19.7145 9.01609 20 12 20C14.9839 20 16.5469 19.7145 17.3378 19.3567C17.7079 19.1893 17.8452 19.0338 17.9027 18.942C17.9602 18.8502 18 18.7236 18 18.5C18 17.7858 17.5982 17.1946 16.5439 16.7264C15.4614 16.2458 13.8722 16 12 16C10.1278 16 8.53857 16.2458 7.45609 16.7264ZM6.64442 14.8986C8.09544 14.2542 10.0062 14 12 14C13.9938 14 15.9046 14.2542 17.3556 14.8986C18.8348 15.5554 20 16.7142 20 18.5C20 18.9667 19.9148 19.4978 19.5973 20.0043C19.2798 20.5106 18.7921 20.8939 18.1622 21.1789C16.9531 21.7259 15.0161 22 12 22C8.98391 22 7.04688 21.7259 5.83781 21.1789C5.20786 20.8939 4.72017 20.5106 4.40272 20.0043C4.08524 19.4978 4 18.9667 4 18.5C4 16.7142 5.16516 15.5554 6.64442 14.8986Z"
+                              fill="#0F1729">
+                        </path>
+                    </svg>
+                </a>
+                <a href="{{ url_for('logout') }}" class="button header__logout">
+                    <svg width="50px" height="50px" viewBox="0 0 24 24" fill="none"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path id="header__svg" fill-rule="evenodd" clip-rule="evenodd"
+                              d="M2 6.5C2 4.01472 4.01472 2 6.5 2H12C14.2091 2 16 3.79086 16 6V7C16 7.55228 15.5523 8 15 8C14.4477 8 14 7.55228 14 7V6C14 4.89543 13.1046 4 12 4H6.5C5.11929 4 4 5.11929 4 6.5V17.5C4 18.8807 5.11929 20 6.5 20H12C13.1046 20 14 19.1046 14 18V17C14 16.4477 14.4477 16 15 16C15.5523 16 16 16.4477 16 17V18C16 20.2091 14.2091 22 12 22H6.5C4.01472 22 2 19.9853 2 17.5V6.5ZM18.2929 8.29289C18.6834 7.90237 19.3166 7.90237 19.7071 8.29289L22.7071 11.2929C23.0976 11.6834 23.0976 12.3166 22.7071 12.7071L19.7071 15.7071C19.3166 16.0976 18.6834 16.0976 18.2929 15.7071C17.9024 15.3166 17.9024 14.6834 18.2929 14.2929L19.5858 13L11 13C10.4477 13 10 12.5523 10 12C10 11.4477 10.4477 11 11 11L19.5858 11L18.2929 9.70711C17.9024 9.31658 17.9024 8.68342 18.2929 8.29289Z"
+                              fill="#0F1729">
+                        </path>
+                    </svg>
+                </a>
+            {% else %}
+                <a href="{{ url_for('register') }}" class="button header__register">Реєстрація</a>
+                <a href="{{ url_for('login') }}" class="button header__login">
+                    <svg width="50px" height="50px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path id="header__svg" fill-rule="evenodd" clip-rule="evenodd"
+                              d="M8 6C8 3.79086 9.79086 2 12 2H17.5C19.9853 2 22 4.01472 22 6.5V17.5C22 19.9853 19.9853 22 17.5 22H12C9.79086 22 8 20.2091 8 18V17C8 16.4477 8.44772 16 9 16C9.55228 16 10 16.4477 10 17V18C10 19.1046 10.8954 20 12 20H17.5C18.8807 20 20 18.8807 20 17.5V6.5C20 5.11929 18.8807 4 17.5 4H12C10.8954 4 10 4.89543 10 6V7C10 7.55228 9.55228 8 9 8C8.44772 8 8 7.55228 8 7V6ZM12.2929 8.29289C12.6834 7.90237 13.3166 7.90237 13.7071 8.29289L16.7071 11.2929C17.0976 11.6834 17.0976 12.3166 16.7071 12.7071L13.7071 15.7071C13.3166 16.0976 12.6834 16.0976 12.2929 15.7071C11.9024 15.3166 11.9024 14.6834 12.2929 14.2929L13.5858 13L5 13C4.44772 13 4 12.5523 4 12C4 11.4477 4.44772 11 5 11L13.5858 11L12.2929 9.70711C11.9024 9.31658 11.9024 8.68342 12.2929 8.29289Z"
+                              fill="#0F1729">
+                        </path>
+                    </svg>
+                </a>
+            {% endif %}
+        </div>
+    </div>
+</header>
+
+<section class="content-container">
+    <h1 class="title">Знайдемо відділення:</h1>
+    <div class="full-specs-form-container">
+        <form action="#" class="specs-form">
+            <div class="spec-container">
+                <h2>Оберіть бажаний населений пункт</h2>
+                <div class="find-by-city-container">
+                    <div class="find-by-city">
+                        <label for="city_name">Населений пункт</label>
+                        <select name="city_name" required>
+                            <option value="" disabled selected hidden>Введіть назву населеного пункту</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" name="calc-val">Знайти</button>
+        </form>
+    </div>
+</section>
+
+<footer class="footer" id="footer">
+    <div class="footer__wrapper">
+        <div class="footer__info">
+            <div class="footer__column">
+                <div class="footer__menu-header">Контактні дані:</div>
+                <ul class="menu-footer">
+                    <li class="menu-footer__item">+380 66 288 1705</li>
+                    <li class="menu-footer__item">quick.support@quick.com</li>
+                    <li class="menu-footer__item">м. Запоріжжя, просп. Соборний 130</li>
+                </ul>
+            </div>
+
+            <div class="footer__column">
+                <div class="footer__menu-header uniq-first">Підписатися на новини:</div>
+
+                <form action="#" class="form-email">
+                    <input type="email" placeholder="Введіть електронну адресу" class="input form-email__input">
+                    <button class="button form-email__button">Підписатися</button>
+                </form>
+
+            </div>
+
+            <div class="footer__column">
+                <div class="footer__menu-header uniq-second">Наші соціальні мережі:</div>
+                <div class="footer__icon">
+                    <a href="https://www.facebook.com/"><img src="../static/img/homepage/facebook.svg"
+                                                             alt="Посилання на facebook"></a>
+                    <a href="https://www.instagram.com/"><img src="../static/img/homepage/inst.svg"
+                                                              alt="Посилання на instagram"></a>
+                    <a href="https://web.telegram.org/a/"><img src="../static/img/homepage/telegram.svg"
+                                                               alt="Посилання на telegram"></a>
+                    <a href="https://twitter.com/"><img src="../static/img/homepage/twitter.svg"
+                                                        alt="Посилання на twitter"></a>
+                    <a href="https://www.tiktok.com/"><img src="../static/img/homepage/tiktok.svg"
+                                                           alt="Посилання на tiktok"></a>
+                    <a href="https://www.youtube.com/"><img src="../static/img/homepage/youtube.svg"
+                                                            alt="Посилання на youtube"></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer__copywrite">© 2024 Quick. Всі права захищені. Ваш надійний партнер у світі поштових
+            послуг
+        </div>
+    </div>
+</footer>
+</body>
+
+</html>

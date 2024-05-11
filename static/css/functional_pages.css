@@ -65,7 +65,8 @@
 .from-to-container,
 .dimension-container,
 .receiver-data-container,
-.package-num-container {
+.package-num-container,
+.find-by-city-container {
     display: flex;
     gap: 25px;
     justify-content: center;
@@ -77,7 +78,8 @@
 .tariff-container,
 .receiver-name,
 .receiver-phone,
-.package-num {
+.package-num,
+.find-by-city {
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -89,12 +91,16 @@
 .tariff-container label,
 .receiver-name label,
 .receiver-phone label,
-.package-num label {
+.package-num label,
+.find-by-city label {
     font-size: 23px; /* Тут мало б бути 24 пікселі, проти опера не відображає як треба */
     color: var(--some-text);
 }
 
-.from-container select, .to-container select, .tariff-container select {
+.from-container select,
+.to-container select,
+.tariff-container select,
+.find-by-city select {
     width: 550px;
     height: 80px;
     border-radius: 20px;

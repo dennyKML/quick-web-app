@@ -94,5 +94,10 @@ def locate_package():
     return render_template('locate_package.html', current_user=current_user)
 
 
+@app.route('/locate-posts')
+def locate_posts():
+    return render_template('locate_posts.html', current_user=current_user)
+
+
 if __name__ == '__main__':
     app.run()
