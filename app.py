@@ -79,5 +79,10 @@ def logout():
     return redirect(url_for('index'))
 
 
+@app.route('/calc-page')
+def calc_page():
+    return render_template('calc_page.html', current_user=current_user)
+
+
 if __name__ == '__main__':
     app.run()
