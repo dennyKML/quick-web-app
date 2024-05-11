@@ -84,5 +84,10 @@ def calc_page():
     return render_template('calc_page.html', current_user=current_user)
 
 
+@app.route('/create-page')
+def create_page():
+    return render_template('create_page.html', current_user=current_user)
+
+
 if __name__ == '__main__':
     app.run()

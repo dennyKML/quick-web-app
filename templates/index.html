@@ -109,7 +109,11 @@
         <span class="service-text">Розрахувати</span>
     </a>
 
-    <div class="category">
+    {% if current_user.is_authenticated %}
+        <a href="{{ url_for('create_page') }}" class="category">
+    {% else %}
+        <a href="{{ url_for('login') }}" class="category">
+    {% endif %}
         <button class="service-button">
             <svg class="service-icon" width="200px" height="200px" viewBox="0 0 12 12" id="Layer_1" xml:space="preserve"
                  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -122,7 +126,7 @@
             </svg>
         </button>
         <span class="service-text">Створити</span>
-    </div>
+    </a>
 
     <div class="text-paragraph text-left">
         <h2 class="service-title left-title">Хто ми такі?</h2>

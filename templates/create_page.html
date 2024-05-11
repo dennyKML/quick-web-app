@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Розрахувати вартість доставки</title>
+    <title>Створити нову посилку</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap"
@@ -62,11 +62,25 @@
 </header>
 
 <section class="content-container">
-    <h1 class="title">Розрахуємо вартість доставки</h1>
+    <h1 class="title">Створимо нову посилку</h1>
     <div class="full-specs-form-container">
         <form action="#" class="specs-form">
-            <div class="spec-container" id="route">
-                <h2>Спершу задайте маршрут</h2>
+            <div class="spec-container">
+                <h2>Кому ви відправляєте посилку?</h2>
+                <div class="receiver-data-container">
+                    <div class="receiver-name">
+                        <label for="receiver_fullname">Повне ім'я отримувача</label>
+                        <input id="fullname" type="text" name="receiver_fullname" placeholder="ПІБ" required>
+                    </div>
+                    <div class="receiver-phone">
+                        <label for="receiver_phone">Номер телефону отримувача</label>
+                        <input id="phone" type="text" name="receiver_phone" placeholder="Номер телефону" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="spec-container">
+                <h2>Звідки і куди відправляєте?</h2>
                 <div class="from-to-container">
                     <div class="from-container">
                         <label for="from-city">Звідки</label>
@@ -83,8 +97,8 @@
                 </div>
             </div>
 
-            <div class="spec-container" id="dimension">
-                <h2>Тепер задайте параметри</h2>
+            <div class="spec-container">
+                <h2>Тепер задайте параметри посилки</h2>
                 <div class="dimension-container">
                     <div class="single-spec-container">
                         <label for="weight">Вага у кг</label>
@@ -110,7 +124,7 @@
             </div>
 
             <div class="spec-container" id="tariffs">
-                <h2>Останній крок - оберіть тариф</h2>
+                <h2>Ну і на останок - оберіть тариф для відправлення</h2>
                 <div class="dimension-container">
                     <div class="tariff-container">
                         <label for="tariff">Тариф</label>
@@ -121,7 +135,7 @@
                 </div>
             </div>
 
-            <button type="submit" name="calc-val">Розрахувати</button>
+            <button type="submit" name="calc-val">Відправити</button>
         </form>
     </div>
 </section>

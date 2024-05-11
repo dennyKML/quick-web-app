@@ -1,6 +1,5 @@
 .content-container {
     width: 1280px;
-    height: 100vh;
     justify-content: center;
     margin: 48px auto 180px;
 }
@@ -63,19 +62,31 @@ form {
     background-color: var(--header-hover-color);
 }
 
-.from-to-container, .dimension-container {
+.from-to-container,
+.dimension-container,
+.receiver-data-container {
     display: flex;
     gap: 25px;
     justify-content: center;
 }
 
-.from-container, .to-container, .single-spec-container, .tariff-container {
+.from-container,
+.to-container,
+.single-spec-container,
+.tariff-container,
+.receiver-name,
+.receiver-phone {
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
-.from-container label, .to-container label, .single-spec-container label, .tariff-container label {
+.from-container label,
+.to-container label,
+.single-spec-container label,
+.tariff-container label,
+.receiver-name label,
+.receiver-phone label {
     font-size: 23px; /* Тут мало б бути 24 пікселі, проти опера не відображає як треба */
     color: var(--some-text);
 }
@@ -90,7 +101,9 @@ form {
     padding: 25px;
 }
 
-.single-spec-container input {
+.single-spec-container input,
+.receiver-name input,
+.receiver-phone input {
     width: 200px;
     height: 80px;
     border-radius: 20px;
@@ -103,6 +116,14 @@ form {
 
 #estimated-val input {
     width: 280px;
+}
+
+#fullname {
+    width: 700px;
+}
+
+#phone {
+    width: 400px;
 }
 
 .tariff-container select {
