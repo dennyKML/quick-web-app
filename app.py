@@ -25,7 +25,8 @@ def load_user(user_id):
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
-        if not Client.select().where(Client.email == form.email.data).exists():
+        if not Client.select().where(Client.email == form.email.data).exists() and \
+                not Client.select().where(Client.phone == form.phone.data).exists():
             hashed_password = generate_password_hash(form.password.data)
             Client.create(
                 firstname=form.firstname.data,
@@ -37,6 +38,8 @@ def register():
             )
             flash('Користувача успішно зареєстровано!', 'success')
             return redirect(url_for('login'))
+        elif Client.select().where(Client.phone == form.phone.data).exists():
+            flash('Користувач з цим номером телефону вже існує.', 'danger')
         else:
             flash('Користувач з цією електронною адресою вже існує.', 'danger')
             return render_template('register.html', form=form)
