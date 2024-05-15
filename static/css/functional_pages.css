@@ -43,6 +43,13 @@
     margin: 0 0 25px;
 }
 
+.paragraph-cost {
+    color: var(--some-text);
+    font-size: 32px;
+    font-weight: 600;
+    margin: 0 0;
+}
+
 .full-specs-form-container form button {
     max-width: 228px;
     width: 100%;

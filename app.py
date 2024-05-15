@@ -2,7 +2,11 @@ import secrets
 import logging
 
 from flask import Flask, render_template, request, redirect, url_for, session, flash
+
+from models.city import *
 from models.client import *
+from models.delivery_tariff import *
+from functions.delivery import calculate_delivery_cost
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import current_user, LoginManager, login_user, logout_user
 
@@ -82,9 +86,26 @@ def logout():
     return redirect(url_for('index'))
 
 
-@app.route('/calc-page')
+@app.route('/calc-page', methods=['GET', 'POST'])
 def calc_page():
-    return render_template('calc_page.html', current_user=current_user)
+    cities = City.select()
+    tariffs = DeliveryTariff.select()
+    if request.method == 'POST':
+        from_city_name = request.form['from-city']
+        to_city_name = request.form['to-city']
+        weight = int(request.form['weight'])
+        width = int(request.form['width'])
+        height = int(request.form['height'])
+        length = int(request.form['length'])
+        estimated_val = int(request.form['estimated_val'])
+        tariff_name = request.form['tariff']
+        cost_package = calculate_delivery_cost(from_city_name, to_city_name, weight, width, height, length,
+                                               estimated_val, tariff_name)
+        print(cost_package)
+        return render_template('calc_page.html', current_user=current_user, cities=cities, tariffs=tariffs,
+                               cost_package=cost_package)
+
+    return render_template('calc_page.html', current_user=current_user, cities=cities, tariffs=tariffs)
 
 
 @app.route('/create-page')

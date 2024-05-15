@@ -64,20 +64,24 @@
 <section class="content-container">
     <h1 class="title">Розрахуємо вартість доставки</h1>
     <div class="full-specs-form-container">
-        <form action="#" class="specs-form">
+        <form method="post" action="{{ url_for('calc_page') }}" class="specs-form">
             <div class="spec-container" id="route">
                 <h2>Спершу задайте маршрут</h2>
                 <div class="from-to-container">
                     <div class="from-container">
                         <label for="from-city">Звідки</label>
                         <select name="from-city" required>
-                            <option value="" disabled selected hidden>Введіть назву населеного пункту</option>
+                            {% for city in cities %}
+                                <option value="{{ city.city_name }}" selected>{{ city.city_name }}</option>
+                            {% endfor %}
                         </select>
                     </div>
                     <div class="to-container">
                         <label for="to-city">Куди</label>
                         <select name="to-city" required>
-                            <option value="" disabled selected hidden>Введіть назву населеного пункту</option>
+                            {% for city in cities %}
+                                <option value="{{ city.city_name }}" selected>{{ city.city_name }}</option>
+                            {% endfor %}
                         </select>
                     </div>
                 </div>
@@ -115,12 +119,18 @@
                     <div class="tariff-container">
                         <label for="tariff">Тариф</label>
                         <select name="tariff" required>
-                            <option value="" disabled selected hidden>Оберіть бажаний тариф</option>
+                            {% for tariff in tariffs %}
+                                <option value="{{ tariff.tariff_name }}" selected>{{ tariff.tariff_name }} - {{ tariff.tariff_min_cost }} грн</option>
+                            {% endfor %}
                         </select>
                     </div>
                 </div>
             </div>
-
+            {% if cost_package %}
+                <div class="spec-container">
+                    <p class="paragraph-cost">Розрахункова вартість доставки: {{ cost_package }} грн.</p>
+                </div>
+            {% endif %}
             <button type="submit" name="calc-val">Розрахувати</button>
         </form>
     </div>
@@ -172,6 +182,7 @@
         </div>
     </div>
 </footer>
+
 </body>
 
 </html>
