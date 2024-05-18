@@ -120,7 +120,8 @@
 .single-spec-container input,
 .receiver-name input,
 .receiver-phone input,
-.package-num input {
+.package-num input,
+#description {
     width: 200px;
     height: 80px;
     border-radius: 20px;
@@ -133,6 +134,10 @@
 
 #estimated-val input {
     width: 280px;
+}
+
+#description {
+    width: 100%;
 }
 
 #fullname {

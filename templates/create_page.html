@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="../static/css/header.css">
     <link rel="stylesheet" href="../static/css/functional_pages.css">
     <link rel="stylesheet" href="../static/css/footer.css">
+    <script src="../static/js/display_flash.js"></script>
 </head>
 
 <body>
@@ -64,7 +65,7 @@
 <section class="content-container">
     <h1 class="title">Створимо нову посилку</h1>
     <div class="full-specs-form-container">
-        <form action="#" class="specs-form">
+        <form method="post" action="{{ url_for('create_page') }}" class="specs-form">
             <div class="spec-container">
                 <h2>Кому ви відправляєте посилку?</h2>
                 <div class="receiver-data-container">
@@ -84,15 +85,25 @@
                 <div class="from-to-container">
                     <div class="from-container">
                         <label for="from-city">Звідки</label>
-                        <select name="from-city" required>
-                            <option value="" disabled selected hidden>Введіть назву населеного пункту</option>
+                        <select id="from-city" name="from-city" required>
+                            <option value="" disabled selected>Оберіть місто</option>
+                            {% for city in cities %}
+                                <option value="{{ city.city_id }}">{{ city.city_name }}</option>
+                            {% endfor %}
                         </select>
+                        <label for="from-post">Відділення</label>
+                        <select id="from-post" name="from-post" required></select>
                     </div>
                     <div class="to-container">
                         <label for="to-city">Куди</label>
-                        <select name="to-city" required>
-                            <option value="" disabled selected hidden>Введіть назву населеного пункту</option>
+                        <select id="to-city" name="to-city" required>
+                            <option value="" disabled selected>Оберіть місто</option>
+                            {% for city in cities %}
+                                <option value="{{ city.city_id }}">{{ city.city_name }}</option>
+                            {% endfor %}
                         </select>
+                        <label for="to-post">Відділення</label>
+                        <select id="to-post" name="to-post" required></select>
                     </div>
                 </div>
             </div>
@@ -123,19 +134,37 @@
                 </div>
             </div>
 
+            <div class="spec-container">
+                <h2>Опис посилки</h2>
+                <input type="text" id="description" name="description" placeholder="Опис...">
+            </div>
+
             <div class="spec-container" id="tariffs">
                 <h2>Ну і на останок - оберіть тариф для відправлення</h2>
                 <div class="dimension-container">
                     <div class="tariff-container">
                         <label for="tariff">Тариф</label>
                         <select name="tariff" required>
-                            <option value="" disabled selected hidden>Оберіть бажаний тариф</option>
+                            {% for tariff in tariffs %}
+                                <option value="{{ tariff.tariff_id }}" selected>{{ tariff.tariff_name }} - {{ tariff.tariff_min_cost }} грн</option>
+                            {% endfor %}
                         </select>
                     </div>
                 </div>
             </div>
 
             <button type="submit" name="calc-val">Відправити</button>
+
+            <div id="flash-messages" style="display: none;">
+              {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                  {% for category, message in messages %}
+                    <div data-category="{{ category }}" data-message="{{ message }}"></div>
+                  {% endfor %}
+                {% endif %}
+              {% endwith %}
+            </div>
+
         </form>
     </div>
 </section>
@@ -186,6 +215,48 @@
         </div>
     </div>
 </footer>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const fromCity = document.querySelector('#from-city');
+        const toCity = document.querySelector('#to-city');
+        const fromPost = document.querySelector('#from-post');
+        const toPost = document.querySelector('#to-post');
+
+        const posts = [
+            {% for post in posts %}
+                {city_id: {{ post.city_id }}, address: "{{ post.address }}"},
+            {% endfor %}
+        ];
+
+        fromCity.addEventListener('change', () => {
+            const selectedCityId = parseInt(fromCity.value);
+            fromPost.innerHTML = '';
+
+            const filteredPosts = posts.filter(post => post.city_id === selectedCityId);
+            filteredPosts.forEach(post => {
+                const option = document.createElement('option');
+                option.value = post.address;
+                option.textContent = post.address;
+                fromPost.appendChild(option);
+            });
+        });
+
+        toCity.addEventListener('change', () => {
+            const selectedCityId = parseInt(toCity.value);
+            toPost.innerHTML = '';
+
+            const filteredPosts = posts.filter(post => post.city_id === selectedCityId);
+            filteredPosts.forEach(post => {
+                const option = document.createElement('option');
+                option.value = post.address;
+                option.textContent = post.address;
+                toPost.appendChild(option);
+            });
+        });
+    });
+</script>
+
 </body>
 
 </html>

@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="../static/css/header.css">
     <link rel="stylesheet" href="../static/css/functional_pages.css">
     <link rel="stylesheet" href="../static/css/footer.css">
+    <script src="../static/js/display_flash.js"></script>
 </head>
 
 <body>
@@ -131,7 +132,18 @@
                     <p class="paragraph-cost">Розрахункова вартість доставки: {{ cost_package }} грн.</p>
                 </div>
             {% endif %}
-            <button type="submit" name="calc-val">Розрахувати</button>
+            <button type="submit" class="calc-btn" name="calc-val">Розрахувати</button>
+
+            <div id="flash-messages" style="display: none;">
+              {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                  {% for category, message in messages %}
+                    <div data-category="{{ category }}" data-message="{{ message }}"></div>
+                  {% endfor %}
+                {% endif %}
+              {% endwith %}
+            </div>
+
         </form>
     </div>
 </section>
