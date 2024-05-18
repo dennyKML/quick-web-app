@@ -64,22 +64,47 @@
 <section class="content-container">
     <h1 class="title">Знайдемо відділення:</h1>
     <div class="full-specs-form-container">
-        <form action="#" class="specs-form">
+        <form method="GET" action="{{ url_for('locate_posts') }}" class="specs-form">
             <div class="spec-container">
                 <h2>Оберіть бажаний населений пункт</h2>
                 <div class="find-by-city-container">
                     <div class="find-by-city">
                         <label for="city_name">Населений пункт</label>
-                        <select name="city_name" required>
+                        <select name="city_name" required onchange="this.form.submit()">
                             <option value="" disabled selected hidden>Введіть назву населеного пункту</option>
+                            {% for city in cities %}
+                                <option value="{{ city.city_name }}" {% if selected_city and selected_city.city_name == city.city_name %}selected{% endif %}>{{ city.city_name }}</option>
+                            {% endfor %}
                         </select>
                     </div>
                 </div>
             </div>
-
-            <button type="submit" name="calc-val">Знайти</button>
         </form>
     </div>
+
+    {% if posts %}
+        <div id="posts" class="posts-container">
+            <h2>У м. {{ selected_city.city_name }} працюють наступні відділення:</h2>
+            <ul>
+                {% for post in posts %}
+                    <li>
+                        <a href="{{ url_for('locate_posts', city_name=selected_city.city_name, post_id=post.post_id) }}#posts">{{ post.address }}, {{ post.postcode }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    {% if staff %}
+        <div id="staff" class="staff-container">
+            <h2>Персонал відділення: {{ post.address }}, {{ post.postcode }}</h2>
+            <ul>
+                {% for worker in staff %}
+                    <li>{{ worker.lastname }} {{ worker.firstname }} {{ worker.midname }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
 </section>
 
 <footer class="footer" id="footer">

@@ -7,6 +7,7 @@ from functions.create_delivery import *
 from models.city import *
 from models.client import *
 from models.post import Post
+from models.staff import Staff
 from functions.calc_delivery import *
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import current_user, LoginManager, login_user, logout_user
@@ -130,9 +131,29 @@ def locate_package():
     return render_template('locate_package.html', current_user=current_user)
 
 
-@app.route('/locate-posts')
+@app.route('/locate-posts', methods=['GET'])
 def locate_posts():
-    return render_template('locate_posts.html', current_user=current_user)
+    cities = City.select()
+    selected_city = None
+    posts = None
+    staff = None
+    post = None
+
+    selected_city_name = request.args.get('city_name')
+    post_id = request.args.get('post_id')
+
+    if selected_city_name:
+        selected_city = City.get_or_none(City.city_name == selected_city_name)
+        if selected_city:
+            posts = Post.select().where(Post.city_id == selected_city.city_id)
+
+    if post_id:
+        post = Post.get_or_none(Post.post_id == post_id)
+        if post:
+            staff = Staff.select().where(Staff.post_id == post.post_id)
+
+    return render_template('locate_posts.html', current_user=current_user, cities=cities, posts=posts,
+                           selected_city=selected_city, post=post, staff=staff)
 
 
 if __name__ == '__main__':
