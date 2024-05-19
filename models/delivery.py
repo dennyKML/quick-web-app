@@ -22,5 +22,5 @@ class Delivery(BaseModel):
     tariff_id = ForeignKeyField(DeliveryTariff, backref='deliveries')
     delivery_status = CharField(max_length=50)
     sending_date = DateField()
-    receiving_date = IntegerField()
+    receiving_date = DateField()
     delivery_cost = DecimalField(max_digits=10, decimal_places=2)

@@ -1,4 +1,5 @@
 from flask_login import current_user
+from datetime import datetime, timedelta
 
 import random
 from models.city import *
@@ -59,7 +60,7 @@ def create_delivery(data):
                                    receiver_post_id=to_post_id,
                                    delivery_status='Відправлено',
                                    sending_date=sending_date,
-                                   receiving_date=random_delivery_time,
+                                   receiving_date=sending_date + timedelta(days=random_delivery_time),
                                    delivery_cost=Decimal(delivery_cost),
                                    tariff_id=data['tariff_id'])
 
