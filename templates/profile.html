@@ -63,45 +63,99 @@
 
 <section class="category-n-profile">
     <div class="category-container">
-        <div class="single-category" id="profile-cat">
-            <h2>Профіль</h2>
-        </div>
-        <div class="single-category" id="send-cat">
-            <h2>Відправлення</h2>
-        </div>
-        <div class="single-category" id="receive-cat">
-            <h2>Отримання</h2>
-        </div>
+        <form method="get" action="{{ url_for('profile') }}">
+            <button type="submit" name="tab" value="profile" class="single-category-btn">Профіль</button>
+            <button type="submit" name="tab" value="send" class="single-category-btn">Відправлення</button>
+            <button type="submit" name="tab" value="receive" class="single-category-btn">Отримання</button>
+        </form>
     </div>
 
     <div class="profile-container">
-        <form method="post" action="#">
-            <div class="form-group">
-                <label for="firstname">Ім'я</label>
-                <input type="text" name="firstname" placeholder="Ім'я" value="{{ current_user.firstname }}">
+        {% if tab == 'profile' %}
+            <form method="post" action="{{ url_for('profile', tab='profile') }}">
+                <div class="form-group">
+                    <label for="firstname">Ім'я</label>
+                    <input type="text" name="firstname" placeholder="Ім'я" value="{{ current_user.firstname }}">
+                </div>
+                <div class="form-group">
+                    <label for="lastname">Прізвище</label>
+                    <input type="text" name="lastname" placeholder="Прізвище" value="{{ current_user.lastname }}">
+                </div>
+                <div class="form-group">
+                    <label for="midname">По батькові</label>
+                    <input type="text" name="midname" placeholder="По батькові" value="{{ current_user.midname }}">
+                </div>
+                <div class="form-group">
+                    <label for="phone">Номер телефону</label>
+                    <input type="text" name="phone" placeholder="Номер телефону" value="{{ current_user.phone }}">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="text" name="email" placeholder="Email" value="{{ current_user.email }}">
+                </div>
+                <div class="form-group">
+                    <label for="address">Адреса</label>
+                    <input type="text" name="address" placeholder="Адреса" value="{{ current_user.address }}">
+                </div>
+                <button type="submit" name="save-changes">Зберігти зміни</button>
+            </form>
+        {% elif tab == 'send' %}
+            <h2>Відправлення</h2>
+            {% if sent_deliveries %}
+                <ul>
+                    {% for delivery in sent_deliveries %}
+                        <li>
+                            <a href="{{ url_for('profile', tab='send', delivery_id=delivery.delivery_id) }}">Відправлення #{{ delivery.delivery_id }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>Немає відправлених посилок.</p>
+            {% endif %}
+        {% elif tab == 'receive' %}
+            <h2>Отримання</h2>
+            {% if received_deliveries %}
+                <ul>
+                    {% for delivery in received_deliveries %}
+                        <li>
+                            <a href="{{ url_for('profile', tab='receive', delivery_id=delivery.delivery_id) }}">Отримання #{{ delivery.delivery_id }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>Немає отриманих посилок.</p>
+            {% endif %}
+        {% endif %}
+
+        {% if delivery_details %}
+            <div class="delivery-details">
+                <h2>Деталі {% if tab == 'send' %}відправлення{% else %}отримання{% endif %} #{{ delivery_details['delivery_id'] }}</h2>
+                <p>Номер посилки: {{ delivery_details['package_id'] }}</p>
+                {% if received_deliveries %}
+                    <p>Відправник: {{ delivery_details['lastname'] }} {{ delivery_details['firstname'] }} {{ delivery_details['midname'] }}</p>
+                {% else %}
+                    <p>Отримувач: {{ delivery_details['receiver_fullname'] }}</p>
+                    <p>Телефон отримувача: {{ delivery_details['receiver_phone'] }}</p>
+                {% endif %}
+                <p>Тариф: {{ delivery_details['tariff_name'] }}</p>
+                <p>Статус: {{ delivery_details['delivery_status'] }}</p>
+                <p>Місце відправки: {{ delivery_details['sender_post_details']['address'] }}, {{ delivery_details['sender_post_details']['postcode'] }}</p>
+                <p>Дата відправки: {{ delivery_details['sending_date'] }}</p>
+                <p>Місце отримання: {{ delivery_details['receiver_post_details']['address'] }}, {{ delivery_details['receiver_post_details']['postcode'] }}</p>
+                {% if delivery_details['delivery_status'] == 'Отримано' %}
+                    <p>Дата отримання: {{ delivery_details['receiving_date'] }}</p>
+                {% endif %}
+                <p>Розміри посилки (ШxВxД у мм, кг): {{ delivery_details['width'] }}x{{ delivery_details['height'] }}x{{ delivery_details['length'] }}, {{ delivery_details['weight'] }} кг</p>
+                <p>Опис посилки: {{ delivery_details['description'] }}</p>
+                <p>Оголошена вартість: {{ delivery_details['estimated_value'] }} грн</p>
+                <p>Вартість доставки: {{ delivery_details['delivery_cost'] }} грн</p>
+                {% if delivery_details['delivery_status'] == 'Готове до отримання' and received_deliveries %}
+                        <form method="post" action="{{ url_for('profile', tab=tab, delivery_id=delivery_details['delivery_id']) }}">
+                            <button type="submit" name="receive-button">Отримати</button>
+                        </form>
+                {% endif %}
             </div>
-            <div class="form-group">
-                <label for="lastname">Прізвище</label>
-                <input type="text" name="lastname" placeholder="Прізвище" value="{{ current_user.lastname }}">
-            </div>
-            <div class="form-group">
-                <label for="midname">По батькові</label>
-                <input type="text" name="midname" placeholder="По батькові" value="{{ current_user.midname }}">
-            </div>
-            <div class="form-group">
-                <label for="phone">Номер телефону</label>
-                <input type="text" name="phone" placeholder="Номер телефону" value="{{ current_user.phone }}">
-            </div>
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="text" name="email" placeholder="Email" value="{{ current_user.email }}">
-            </div>
-            <div class="form-group">
-                <label for="address">Адреса</label>
-                <input type="text" name="address" placeholder="Адреса" value="{{ current_user.address }}">
-            </div>
-            <button type="submit" name="save-changes">Зберігти зміни</button>
-        </form>
+        {% endif %}
     </div>
 </section>
 

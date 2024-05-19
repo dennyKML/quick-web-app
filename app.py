@@ -70,7 +70,10 @@ def login():
 
 @app.route('/profile', methods=['GET', 'POST'])
 def profile():
-    if request.method == 'POST':
+    tab = request.args.get('tab', 'profile')
+    delivery_id = request.args.get('delivery_id', None)
+
+    if request.method == 'POST' and tab == 'profile':
         if 'save-changes' in request.form:
             current_user.firstname = request.form['firstname']
             current_user.lastname = request.form['lastname']
@@ -79,7 +82,56 @@ def profile():
             current_user.email = request.form['email']
             current_user.address = request.form['address']
             current_user.save()
-    return render_template('profile.html', current_user=current_user)
+
+    if 'receive-button' in request.form:
+        delivery = Delivery.get(Delivery.delivery_id == delivery_id)
+        delivery.delivery_status = 'Отримано'
+        delivery.receiving_date = datetime.now().date()
+        delivery.save()
+
+        return redirect(url_for('profile', tab=tab, delivery_id=delivery_id))
+
+    sent_deliveries = None
+    received_deliveries = None
+    delivery_details = None
+
+    if delivery_id:
+        sender_post = Post.alias('sender_post')
+        receiver_post = Post.alias('receiver_post')
+
+        delivery_details = (Delivery
+                            .select(Delivery, Package, Dimension, DeliveryTariff, sender_post, receiver_post, Client)
+                            .join(Package, on=(Delivery.delivery_id == Package.delivery_id))
+                            .join(Dimension, on=(Package.dimension_id == Dimension.dimension_id))
+                            .join(DeliveryTariff, on=(Delivery.tariff_id == DeliveryTariff.tariff_id))
+                            .join(Client, on=(Delivery.sender_id == Client.client_id))
+                            .switch(Delivery)
+                            .join(sender_post, on=(Delivery.sender_post_id == sender_post.post_id))
+                            .switch(Delivery)
+                            .join(receiver_post, on=(Delivery.receiver_post_id == receiver_post.post_id))
+                            .where(Delivery.delivery_id == delivery_id)
+                            .dicts().get())
+
+        sender_post_details = (sender_post
+                               .select()
+                               .where(sender_post.post_id == delivery_details['sender_post_id'])
+                               .dicts().get())
+
+        receiver_post_details = (receiver_post
+                                 .select()
+                                 .where(receiver_post.post_id == delivery_details['receiver_post_id'])
+                                 .dicts().get())
+
+        delivery_details['sender_post_details'] = sender_post_details
+        delivery_details['receiver_post_details'] = receiver_post_details
+
+    if tab == 'send':
+        sent_deliveries = Delivery.select().where(Delivery.sender_id == current_user.client_id)
+    elif tab == 'receive':
+        received_deliveries = Delivery.select().where(Delivery.receiver_phone.contains(current_user.phone))
+
+    return render_template('profile.html', current_user=current_user, tab=tab, sent_deliveries=sent_deliveries,
+                           received_deliveries=received_deliveries, delivery_details=delivery_details)
 
 
 @app.route('/logout')
