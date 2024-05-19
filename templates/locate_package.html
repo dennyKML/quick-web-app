@@ -66,18 +66,43 @@
     <div class="full-specs-form-container">
         <form action="#" class="specs-form">
             <div class="spec-container">
-                <h2>Спершу введіть номер відправлення/отримання</h2>
+                <h2>Спершу введіть номер посилки (відправлення/отримання)</h2>
                 <div class="package-num-container">
                     <div class="package-num">
-                        <label for="package_num">Номер посилки</label>
-                        <input id="number-of-package" type="text" name="package_num" placeholder="Введіть номер посилки" required>
+                        <input id="number-of-package" type="text" name="delivery_id" placeholder="Введіть номер посилки" required>
                     </div>
                 </div>
             </div>
 
-            <button type="submit" name="calc-val">Знайти</button>
+            <button type="submit" >Знайти</button>
         </form>
     </div>
+
+    {% if delivery_details %}
+        <div class="delivery-details">
+            <h2>Деталі відправлення #{{ delivery_details['delivery_id'] }}</h2>
+            <p>Номер посилки: {{ delivery_details['package_id'] }}</p>
+            <p>Відправник: {{ delivery_details['lastname'] }} {{ delivery_details['firstname'] }} {{ delivery_details['midname'] }}</p>
+            <p>Отримувач: {{ delivery_details['receiver_fullname'] }}</p>
+            <p>Телефон отримувача: {{ delivery_details['receiver_phone'] }}</p>
+            <p>Тариф: {{ delivery_details['tariff_name'] }}</p>
+            <p>Статус: {{ delivery_details['delivery_status'] }}</p>
+            <p>Місце відправки: {{ delivery_details['sender_post_details']['address'] }}, {{ delivery_details['sender_post_details']['postcode'] }}</p>
+            <p>Дата відправки: {{ delivery_details['sending_date'] }}</p>
+            <p>Місце отримання: {{ delivery_details['receiver_post_details']['address'] }}, {{ delivery_details['receiver_post_details']['postcode'] }}</p>
+            {% if delivery_details['delivery_status'] == 'Отримано' %}
+                <p>Дата отримання: {{ delivery_details['receiving_date'] }}</p>
+            {% endif %}
+            <p>Розміри посилки (ШxВxД у мм, кг): {{ delivery_details['width'] }}x{{ delivery_details['height'] }}x{{ delivery_details['length'] }}, {{ delivery_details['weight'] }} кг</p>
+            <p>Опис посилки: {{ delivery_details['description'] }}</p>
+            <p>Оголошена вартість: {{ delivery_details['estimated_value'] }} грн</p>
+            <p>Вартість доставки: {{ delivery_details['delivery_cost'] }} грн</p>
+        </div>
+    {% elif delivery_id %}
+        <div>
+            <p> Відправлення з вказаним ID не знайдено. </p>
+        </div>
+    {% endif %}
 </section>
 
 <footer class="footer" id="footer">

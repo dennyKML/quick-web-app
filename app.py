@@ -178,9 +178,51 @@ def create_page():
                            tariffs=tariffs)
 
 
-@app.route('/locate-package')
+from peewee import DoesNotExist
+
+
+@app.route('/locate-package', methods=['GET'])
 def locate_package():
-    return render_template('locate_package.html', current_user=current_user)
+    delivery_id = request.args.get('delivery_id', None)
+
+    delivery_details = None
+
+    if delivery_id:
+        sender_post = Post.alias('sender_post')
+        receiver_post = Post.alias('receiver_post')
+
+        delivery_details = (Delivery
+                            .select(Delivery, Package, Dimension, DeliveryTariff, sender_post, receiver_post,
+                                    Client)
+                            .join(Package, on=(Delivery.delivery_id == Package.delivery_id))
+                            .join(Dimension, on=(Package.dimension_id == Dimension.dimension_id))
+                            .join(DeliveryTariff, on=(Delivery.tariff_id == DeliveryTariff.tariff_id))
+                            .join(Client, on=(Delivery.sender_id == Client.client_id))
+                            .switch(Delivery)
+                            .join(sender_post, on=(Delivery.sender_post_id == sender_post.post_id))
+                            .switch(Delivery)
+                            .join(receiver_post, on=(Delivery.receiver_post_id == receiver_post.post_id))
+                            .where(Delivery.delivery_id == delivery_id)
+                            .dicts().first())
+
+        if not delivery_details:
+            return render_template('locate_package.html', current_user=current_user, delivery_id=delivery_id)
+
+        sender_post_details = (sender_post
+                               .select()
+                               .where(sender_post.post_id == delivery_details['sender_post_id'])
+                               .dicts().get())
+
+        receiver_post_details = (receiver_post
+                                 .select()
+                                 .where(receiver_post.post_id == delivery_details['receiver_post_id'])
+                                 .dicts().get())
+
+        delivery_details['sender_post_details'] = sender_post_details
+        delivery_details['receiver_post_details'] = receiver_post_details
+
+    return render_template('locate_package.html', current_user=current_user, delivery_details=delivery_details,
+                           delivery_id=delivery_id)
 
 
 @app.route('/locate-posts', methods=['GET'])
