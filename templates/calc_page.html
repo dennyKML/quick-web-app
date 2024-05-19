@@ -127,11 +127,6 @@
                     </div>
                 </div>
             </div>
-            {% if cost_package %}
-                <div class="spec-container">
-                    <p class="paragraph-cost">Розрахункова вартість доставки: {{ cost_package }} грн.</p>
-                </div>
-            {% endif %}
             <button type="submit" class="calc-btn" name="calc-val">Розрахувати</button>
 
             <div id="flash-messages" style="display: none;">
@@ -146,6 +141,36 @@
 
         </form>
     </div>
+
+    {% if cost_package %}
+        <div class="full-specs-form-container my-my-container">
+            <div class="spec-container my-container">
+                <p class="paragraph-cost">Розрахункова вартість доставки: {{ cost_package }} грн</p>
+                <div class="full-specs-form-container calc-container">
+                    <div>
+                        <ul class="list">
+                            <li>Тариф</li>
+                            <li>Місце відправки</li>
+                            <li>Місце отримання</li>
+                            <li>Розміри посилки<br>
+                                (ШxВxД у мм, кг)</li>
+                            <li>Оголошена вартість</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <ul class="list">
+                            <li>{{ tariff_name }}</li>
+                            <li>м. {{ from_city }}</li>
+                            <li>м. {{ to_city }}</li>
+                            <li class="double-line-height">{{ width }}x{{ height }}x{{ length }}, {{ weight }}кг</li>
+                            <li>{{ estimated_val }} грн</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
 </section>
 
 <footer class="footer" id="footer">

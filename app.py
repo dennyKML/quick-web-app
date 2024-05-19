@@ -146,12 +146,16 @@ def calc_page():
     tariffs = DeliveryTariff.select()
     if request.method == 'POST':
         data = calc_delivery_data(request)
+        tariff_name = request.form['tariff']
         if data is None:
             flash('Введено помилкові дані!', 'danger')
             return redirect(url_for('calc_page'))
         cost_package = calculate_cost(data)
         return render_template('calc_page.html', current_user=current_user, cities=cities, tariffs=tariffs,
-                               cost_package=cost_package)
+                               cost_package=cost_package, tariff_name=tariff_name, from_city=data['from_city_name'],
+                               to_city=data['to_city_name'], weight=data['weight'], width=int(data['width']),
+                               height=int(data['height']), length=int(data['length']),
+                               estimated_val=data['estimated_val'])
 
     return render_template('calc_page.html', current_user=current_user, cities=cities, tariffs=tariffs)
 

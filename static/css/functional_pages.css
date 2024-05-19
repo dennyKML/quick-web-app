@@ -22,6 +22,36 @@
     display: flex;
 }
 
+.my-my-container {
+    margin-top: 25px;
+}
+
+.double-line-height {
+    padding-bottom: 28px;
+}
+
+.calc-container {
+    display: flex;
+    gap: 150px;
+}
+
+.list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.list li {
+    font-size: 24px;
+    font-weight: 500;
+    margin-bottom: 25px;
+}
+
+.my-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
 .full-specs-form-container form {
     display: flex;
     flex-direction: column;

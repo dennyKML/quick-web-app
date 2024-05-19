@@ -23,4 +23,5 @@ class Delivery(BaseModel):
     delivery_status = CharField(max_length=50)
     sending_date = DateField()
     receiving_date = DateField()
+    receiving_days = IntegerField()
     delivery_cost = DecimalField(max_digits=10, decimal_places=2)
