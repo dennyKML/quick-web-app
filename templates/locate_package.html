@@ -79,29 +79,63 @@
     </div>
 
     {% if delivery_details %}
+
         <div class="delivery-details">
-            <h2>Деталі відправлення #{{ delivery_details['delivery_id'] }}</h2>
-            <p>Номер посилки: {{ delivery_details['package_id'] }}</p>
-            <p>Відправник: {{ delivery_details['lastname'] }} {{ delivery_details['firstname'] }} {{ delivery_details['midname'] }}</p>
-            <p>Отримувач: {{ delivery_details['receiver_fullname'] }}</p>
-            <p>Телефон отримувача: {{ delivery_details['receiver_phone'] }}</p>
-            <p>Тариф: {{ delivery_details['tariff_name'] }}</p>
-            <p>Статус: {{ delivery_details['delivery_status'] }}</p>
-            <p>Місце відправки: {{ delivery_details['sender_post_details']['address'] }}, {{ delivery_details['sender_post_details']['postcode'] }}</p>
-            <p>Дата відправки: {{ delivery_details['sending_date'] }}</p>
-            <p>Місце отримання: {{ delivery_details['receiver_post_details']['address'] }}, {{ delivery_details['receiver_post_details']['postcode'] }}</p>
-            {% if delivery_details['delivery_status'] == 'Отримано' %}
-                <p>Дата отримання: {{ delivery_details['receiving_date'] }}</p>
-            {% endif %}
-            <p>Розміри посилки (ШxВxД у мм, кг): {{ delivery_details['width'] }}x{{ delivery_details['height'] }}x{{ delivery_details['length'] }}, {{ delivery_details['weight'] }} кг</p>
-            <p>Опис посилки: {{ delivery_details['description'] }}</p>
-            <p>Оголошена вартість: {{ delivery_details['estimated_value'] }} грн</p>
-            <p>Вартість доставки: {{ delivery_details['delivery_cost'] }} грн</p>
+            <div class="single-sending">
+                <div class="single-sending-header">
+                    <h2 class="single-sending-title">Ми знайшли посилку #{{ delivery_details['delivery_id'] }}</h2>
+                </div>
+                <div class="single-sending-body">
+                    <div class="single-sending-body-group-labels">
+                        <p class="single-sending-body-group-label">Відправник</p>
+                        <p class="single-sending-body-group-label">Отримувач</p>
+                        <p class="single-sending-body-group-label">Телефон отримувача</p>
+                        <p class="single-sending-body-group-label">Тариф</p>
+                        <p class="single-sending-body-group-label">Статус</p>
+                        <p class="single-sending-body-group-label">Звідки</p>
+                        <p class="single-sending-body-group-label">Куди</p>
+                        <p class="single-sending-body-group-label">Дата відправлення</p>
+                        <p class="single-sending-body-group-label">Дата отримання</p>
+                        <p class="single-sending-body-group-label">Розміри посилки</p>
+                        <p class="single-sending-body-group-label">Опис посилки</p>
+                        <p class="single-sending-body-group-label">Оголошена вартість</p>
+                        <p class="single-sending-body-group-label">Вартість доставлення</p>
+                    </div>
+
+                    <div class="single-sending-body-group-data">
+                        <p class="single-sending-body-group-data" id="sender-id">
+                            {{ delivery_details['lastname'] }} {{ delivery_details['firstname'] }} {{ delivery_details['midname'] }}
+                        </p>
+                        <p class="single-sending-body-group-data" id="receiver-id">{{ delivery_details['receiver_fullname'] }}</p>
+                        <p class="single-sending-body-group-data" id="receiver-phone-id">{{ delivery_details['receiver_phone'] }}</p>
+                        <p class="single-sending-body-group-data" id="tariff-id">{{ delivery_details['tariff_name'] }}</p>
+                        <p class="single-sending-body-group-data" id="status-id">{{ delivery_details['delivery_status'] }}</p>
+                        <p class="single-sending-body-group-data" id="from-id">
+                            {{ delivery_details['sender_post_details']['address'] }}, {{ delivery_details['sender_post_details']['postcode'] }}
+                        </p>
+                        <p class="single-sending-body-group-data" id="to-id">
+                            {{ delivery_details['receiver_post_details']['address'] }}, {{ delivery_details['receiver_post_details']['postcode'] }}
+                        </p>
+                        <p class="single-sending-body-group-data" id="date-of-send-id">{{ delivery_details['sending_date'] }}</p>
+                        <p class="single-sending-body-group-data" id="date-of-receive-id">
+                            {% if delivery_details['delivery_status'] == 'Отримано' %}
+                                {{ delivery_details['receiving_date'] }}
+                            {% else %}
+                                Ще не отримано
+                            {% endif %}
+                        </p>
+                        <p class="single-sending-body-group-data" id="dimension-id">
+                            {{ delivery_details['width'] }}x{{ delivery_details['height'] }}x{{ delivery_details['length'] }}, {{ delivery_details['weight'] }} кг
+                        </p>
+                        <p class="single-sending-body-group-data" id="description-id">{{ delivery_details['description'] }}</p>
+                        <p class="single-sending-body-group-data" id="estimated-id">{{ delivery_details['estimated_value'] }}</p>
+                        <p class="single-sending-body-group-data" id="ship-cost-id">{{ delivery_details['delivery_cost'] }}</p>
+                    </div>
+                </div>
+            </div>
         </div>
     {% elif delivery_id %}
-        <div>
-            <p> Відправлення з вказаним ID не знайдено. </p>
-        </div>
+        <p class="you-dont-have-any">Відправлення з вказаним номером не знайдено!</p>
     {% endif %}
 </section>
 

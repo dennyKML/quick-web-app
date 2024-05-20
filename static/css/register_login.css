@@ -50,3 +50,13 @@
 .register-form button:hover, .login-form button:hover {
     background-color: var(--header-hover-color);
 }
+
+.already-reg-log {
+    font-weight: 500;
+    font-size: 20px;
+    transition: all 0.3s ease;
+}
+
+.already-reg-log:hover {
+    color: var(--header-hover-color);
+}

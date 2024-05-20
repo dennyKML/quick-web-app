@@ -1,7 +1,7 @@
 .category-n-profile {
     margin-top: 48px;
-    /*margin-bottom: 180px;*/
-    height: 100vh;
+    margin-bottom: 180px;
+    min-height: calc(100vh - 117px - 319px);
     display: flex;
     justify-content: center;
     gap: 48px;
@@ -127,4 +127,99 @@
 
 .form-category-container button:hover {
     background-color: var(--header-hover-color);
+}
+
+/* Відправлення */
+
+.sending-category-title {
+    margin: 0;
+    font-size: 48px;
+    font-weight: 800;
+    color: var(--main-color);
+}
+
+.single-sending {
+    background-color: var(--main-color);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 886px;
+    justify-content: center;
+    /*align-items: center;*/
+    padding: 25px;
+}
+
+.single-sending-title {
+    color: #FFFFFF;
+    font-weight: 800;
+    font-size: 36px;
+    margin: 0;
+    cursor: pointer;
+}
+
+.single-sending-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#receive-button {
+    width: 160px;
+    border-radius: 20px;
+    background-color: white;
+    /*padding: 14px;*/
+    font-weight: 800;
+    font-size: 20px;
+    color: var(--main-color);
+    transition: all 0.3s ease;
+    /*height: auto;*/
+}
+
+#receive-button:hover {
+    background-color: var(--footer-bg);
+}
+
+.single-sending-body {
+    /*display: flex;*/
+    display: none;
+    justify-content: start;
+    gap: 30px;
+    padding: 25px;
+    background-color: var(--footer-bg);
+    border-radius: 20px;
+    align-self: flex-start;
+    width: 846px;
+}
+
+.single-sending.open .single-sending-body {
+    display: flex;
+}
+
+.single-sending-body-group-labels,
+.single-sending-body-group-data {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: start;
+}
+
+.single-sending-body-group-label {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.single-sending-body-group-data {
+    margin: 0;
+    font-weight: 600;
+    font-size: 24px;
+    color: #280040;
+}
+
+.you-dont-have-any {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--main-color);
 }

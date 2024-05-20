@@ -100,64 +100,126 @@
                 <button type="submit" name="save-changes">Зберігти зміни</button>
             </form>
         {% elif tab == 'send' %}
-            <h2>Відправлення</h2>
+            <h2 class="sending-category-title">Відправлення</h2>
             {% if sent_deliveries %}
-                <ul>
-                    {% for delivery in sent_deliveries %}
-                        <li>
-                            <a href="{{ url_for('profile', tab='send', delivery_id=delivery.delivery_id) }}">Відправлення #{{ delivery.delivery_id }}</a>
-                        </li>
-                    {% endfor %}
-                </ul>
+                {% for delivery in sent_deliveries %}
+                    <div class="single-sending">
+                        <div class="single-sending-header" onclick="toggleBody(this)">
+                            <h2 class="single-sending-title">Відправлення #{{ delivery.delivery_id }}</h2>
+                        </div>
+                        <div class="single-sending-body">
+                            <div class="single-sending-body-group-labels">
+                                <p class="single-sending-body-group-label">Отримувач</p>
+                                <p class="single-sending-body-group-label">Телефон отримувача</p>
+                                <p class="single-sending-body-group-label">Тариф</p>
+                                <p class="single-sending-body-group-label">Статус</p>
+                                <p class="single-sending-body-group-label">Звідки</p>
+                                <p class="single-sending-body-group-label">Куди</p>
+                                <p class="single-sending-body-group-label">Дата відправлення</p>
+                                <p class="single-sending-body-group-label">Дата отримання</p>
+                                <p class="single-sending-body-group-label">Розміри посилки</p>
+                                <p class="single-sending-body-group-label">Опис посилки</p>
+                                <p class="single-sending-body-group-label">Оголошена вартість</p>
+                                <p class="single-sending-body-group-label">Вартість доставлення</p>
+                            </div>
+
+                            <div class="single-sending-body-group-data">
+                                <p class="single-sending-body-group-data" id="receiver-id">{{ delivery.receiver_fullname }}</p>
+                                <p class="single-sending-body-group-data" id="receiver-phone-id">{{ delivery.receiver_phone }}</p>
+                                <p class="single-sending-body-group-data" id="tariff-id">{{ delivery.tariff_id.tariff_name }}</p>
+                                <p class="single-sending-body-group-data" id="status-id">{{ delivery.delivery_status }}</p>
+                                <p class="single-sending-body-group-data" id="from-id">{{ delivery.sender_post_id.address }}, {{ delivery.sender_post_id.postcode }}</p>
+                                <p class="single-sending-body-group-data" id="to-id">{{ delivery.receiver_post_id.address }}, {{ delivery.receiver_post_id.postcode }}</p>
+                                <p class="single-sending-body-group-data" id="date-of-send-id">{{ delivery.sending_date }}</p>
+                                <p class="single-sending-body-group-data" id="date-of-receive-id">
+                                   {% if delivery.receiving_date != null %}
+                                        {{ delivery.receiving_date }}
+                                   {% else %}
+                                        Ще не отримано
+                                   {% endif %}
+                                </p>
+                                <p class="single-sending-body-group-data" id="dimension-id">
+                                    {{ delivery.packages[0].dimension_id.width }}x{{ delivery.packages[0].dimension_id.height }}x{{ delivery.packages[0].dimension_id.length }}, {{ delivery.packages[0].weight }} кг
+                                </p>
+                                <p class="single-sending-body-group-data" id="description-id">{{ delivery.packages[0].description }}</p>
+                                <p class="single-sending-body-group-data" id="estimated-id">{{ delivery.packages[0].estimated_value }}</p>
+                                <p class="single-sending-body-group-data" id="ship-cost-id">{{ delivery.delivery_cost }}</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
             {% else %}
-                <p>Немає відправлених посилок.</p>
+                <p class="you-dont-have-any">Ви ще не відправляли посилок!</p>
             {% endif %}
         {% elif tab == 'receive' %}
-            <h2>Отримання</h2>
+            <h2 class="sending-category-title">Отримання</h2>
             {% if received_deliveries %}
-                <ul>
-                    {% for delivery in received_deliveries %}
-                        <li>
-                            <a href="{{ url_for('profile', tab='receive', delivery_id=delivery.delivery_id) }}">Отримання #{{ delivery.delivery_id }}</a>
-                        </li>
-                    {% endfor %}
-                </ul>
-            {% else %}
-                <p>Немає отриманих посилок.</p>
-            {% endif %}
-        {% endif %}
+                {% for delivery in received_deliveries %}
+                    <div class="single-sending">
+                        <div class="single-sending-header">
+                            <h2 class="single-sending-title" onclick="toggleBody(this)">Отримання #{{ delivery.delivery_id }}</h2>
+                            {% if delivery.delivery_status == 'Готове до отримання' %}
+                                <form method="post" action="{{ url_for('profile', tab=tab, delivery_id=delivery.delivery_id) }}">
+                                    <button id="receive-button" type="submit" name="receive-button">Отримати</button>
+                                </form>
+                            {% endif %}
+                        </div>
+                        <div class="single-sending-body">
+                            <div class="single-sending-body-group-labels">
+                                <p class="single-sending-body-group-label">Відправник</p>
+{#                                <p class="single-sending-body-group-label">Телефон отримувача</p>#}
+                                <p class="single-sending-body-group-label">Тариф</p>
+                                <p class="single-sending-body-group-label">Статус</p>
+                                <p class="single-sending-body-group-label">Звідки</p>
+                                <p class="single-sending-body-group-label">Куди</p>
+                                <p class="single-sending-body-group-label">Дата відправлення</p>
+                                <p class="single-sending-body-group-label">Дата отримання</p>
+                                <p class="single-sending-body-group-label">Розміри посилки</p>
+                                <p class="single-sending-body-group-label">Опис посилки</p>
+                                <p class="single-sending-body-group-label">Оголошена вартість</p>
+                                <p class="single-sending-body-group-label">Вартість доставлення</p>
+                            </div>
 
-        {% if delivery_details %}
-            <div class="delivery-details">
-                <h2>Деталі {% if tab == 'send' %}відправлення{% else %}отримання{% endif %} #{{ delivery_details['delivery_id'] }}</h2>
-                <p>Номер посилки: {{ delivery_details['package_id'] }}</p>
-                {% if received_deliveries %}
-                    <p>Відправник: {{ delivery_details['lastname'] }} {{ delivery_details['firstname'] }} {{ delivery_details['midname'] }}</p>
-                {% else %}
-                    <p>Отримувач: {{ delivery_details['receiver_fullname'] }}</p>
-                    <p>Телефон отримувача: {{ delivery_details['receiver_phone'] }}</p>
-                {% endif %}
-                <p>Тариф: {{ delivery_details['tariff_name'] }}</p>
-                <p>Статус: {{ delivery_details['delivery_status'] }}</p>
-                <p>Місце відправки: {{ delivery_details['sender_post_details']['address'] }}, {{ delivery_details['sender_post_details']['postcode'] }}</p>
-                <p>Дата відправки: {{ delivery_details['sending_date'] }}</p>
-                <p>Місце отримання: {{ delivery_details['receiver_post_details']['address'] }}, {{ delivery_details['receiver_post_details']['postcode'] }}</p>
-                {% if delivery_details['delivery_status'] == 'Отримано' %}
-                    <p>Дата отримання: {{ delivery_details['receiving_date'] }}</p>
-                {% endif %}
-                <p>Розміри посилки (ШxВxД у мм, кг): {{ delivery_details['width'] }}x{{ delivery_details['height'] }}x{{ delivery_details['length'] }}, {{ delivery_details['weight'] }} кг</p>
-                <p>Опис посилки: {{ delivery_details['description'] }}</p>
-                <p>Оголошена вартість: {{ delivery_details['estimated_value'] }} грн</p>
-                <p>Вартість доставки: {{ delivery_details['delivery_cost'] }} грн</p>
-                {% if delivery_details['delivery_status'] == 'Готове до отримання' and received_deliveries %}
-                        <form method="post" action="{{ url_for('profile', tab=tab, delivery_id=delivery_details['delivery_id']) }}">
-                            <button type="submit" name="receive-button">Отримати</button>
-                        </form>
-                {% endif %}
-            </div>
+                            <div class="single-sending-body-group-data">
+                                <p class="single-sending-body-group-data" id="receiver-id">
+                                    {{ delivery.sender_id.lastname }} {{ delivery.sender_id.firstname }} {{ delivery.sender_id.midname }}
+                                </p>
+{#                                <p class="single-sending-body-group-data" id="receiver-phone-id">{{ delivery.receiver_phone }}</p>#}
+                                <p class="single-sending-body-group-data" id="tariff-id">{{ delivery.tariff_id.tariff_name }}</p>
+                                <p class="single-sending-body-group-data" id="status-id">{{ delivery.delivery_status }}</p>
+                                <p class="single-sending-body-group-data" id="from-id">{{ delivery.sender_post_id.address }}, {{ delivery.sender_post_id.postcode }}</p>
+                                <p class="single-sending-body-group-data" id="to-id">{{ delivery.receiver_post_id.address }}, {{ delivery.receiver_post_id.postcode }}</p>
+                                <p class="single-sending-body-group-data" id="date-of-send-id">{{ delivery.sending_date }}</p>
+                                <p class="single-sending-body-group-data" id="date-of-receive-id">
+                                   {% if delivery.receiving_date != null %}
+                                        {{ delivery.receiving_date }}
+                                   {% else %}
+                                        Ще не отримано
+                                   {% endif %}
+                                </p>
+                                <p class="single-sending-body-group-data" id="dimension-id">
+                                    {{ delivery.packages[0].dimension_id.width }}x{{ delivery.packages[0].dimension_id.height }}x{{ delivery.packages[0].dimension_id.length }}, {{ delivery.packages[0].weight }} кг
+                                </p>
+                                <p class="single-sending-body-group-data" id="description-id">{{ delivery.packages[0].description }}</p>
+                                <p class="single-sending-body-group-data" id="estimated-id">{{ delivery.packages[0].estimated_value }}</p>
+                                <p class="single-sending-body-group-data" id="ship-cost-id">{{ delivery.delivery_cost }}</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p class="you-dont-have-any">Вам ще не відправляли посилок!</p>
+            {% endif %}
         {% endif %}
     </div>
 </section>
+
+<script>
+    function toggleBody(element) {
+        var singleSending = element.closest('.single-sending');
+        singleSending.classList.toggle('open');
+    }
+</script>
 
 <footer class="footer" id="footer">
     <div class="footer__wrapper">

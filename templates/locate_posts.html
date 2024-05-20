@@ -84,27 +84,39 @@
 
     {% if posts %}
         <div id="posts" class="posts-container">
-            <h2>У м. {{ selected_city.city_name }} працюють наступні відділення:</h2>
-            <ul>
+            <div class="posts-container-other-back">
+                <h2 class="posts-container-title">
+                    У м. {{ selected_city.city_name }} працюють наступні відділення:
+                </h2>
                 {% for post in posts %}
-                    <li>
-                        <a href="{{ url_for('locate_posts', city_name=selected_city.city_name, post_id=post.post_id) }}#posts">{{ post.address }}, {{ post.postcode }}</a>
-                    </li>
+                    <div class="single-post">
+                        <h2 class="single-post-title" onclick="toggleBody(this)">
+                            {{ post.address }}, {{ post.postcode }}
+                        </h2>
+
+                        <div class="single-post-staff-data">
+                            <p class="single-post-staff-data-row" id="single-post-staff-data-row-title">Персонал:</p>
+                            {% if staff_by_post[post.post_id] %}
+                                {% for worker in staff_by_post[post.post_id] %}
+                                    <p class="single-post-staff-data-row">{{ worker.lastname }} {{ worker.firstname }} {{ worker.midname }}</p>
+                                {% endfor %}
+                            {% else %}
+                                <p class="single-post-staff-data-row">Немає персоналу</p>
+                            {% endif %}
+                        </div>
+                    </div>
                 {% endfor %}
-            </ul>
+            </div>
         </div>
     {% endif %}
 
-    {% if staff %}
-        <div id="staff" class="staff-container">
-            <h2>Персонал відділення: {{ post.address }}, {{ post.postcode }}</h2>
-            <ul>
-                {% for worker in staff %}
-                    <li>{{ worker.lastname }} {{ worker.firstname }} {{ worker.midname }}</li>
-                {% endfor %}
-            </ul>
-        </div>
-    {% endif %}
+<script>
+    function toggleBody(element) {
+        var singlePost = element.parentElement;
+        singlePost.classList.toggle('open');
+    }
+</script>
+
 </section>
 
 <footer class="footer" id="footer">

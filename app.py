@@ -56,8 +56,17 @@ def register():
                 email=form.email.data,
                 password=hashed_password
             )
-            flash('Користувача успішно зареєстровано!', 'success')
-            return redirect(url_for('login'))
+            # flash('Користувача успішно зареєстровано!', 'success')
+
+            email = form.email.data
+            password = form.password.data
+
+            user = Client.get_or_none(Client.email == email)
+            if user and check_password_hash(user.password, password):
+                login_user(user)
+                return redirect(url_for('index'))
+
+            # return redirect(url_for('login'))
         elif Client.select().where(Client.phone == form.phone.data).exists():
             flash('Користувач з цим номером телефону вже існує.', 'danger')
         else:
@@ -264,24 +273,19 @@ def locate_posts():
     cities = City.select()
     selected_city = None
     posts = None
-    staff = None
-    post = None
+    staff_by_post = {}
 
     selected_city_name = request.args.get('city_name')
-    post_id = request.args.get('post_id')
 
     if selected_city_name:
         selected_city = City.get_or_none(City.city_name == selected_city_name)
         if selected_city:
             posts = Post.select().where(Post.city_id == selected_city.city_id)
-
-    if post_id:
-        post = Post.get_or_none(Post.post_id == post_id)
-        if post:
-            staff = Staff.select().where(Staff.post_id == post.post_id)
+            for post in posts:
+                staff_by_post[post.post_id] = Staff.select().where(Staff.post_id == post.post_id)
 
     return render_template('locate_posts.html', current_user=current_user, cities=cities, posts=posts,
-                           selected_city=selected_city, post=post, staff=staff)
+                           selected_city=selected_city, staff_by_post=staff_by_post)
 
 
 if __name__ == '__main__':
