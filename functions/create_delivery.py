@@ -12,6 +12,13 @@ from models.delivery_tariff import DeliveryTariff
 from functions.check_number import is_valid_number
 from functions.calc_delivery import calculate_delivery_cost
 
+import logging
+
+
+# Налаштування логування
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(message)s')
+logger = logging.getLogger(__name__)
+
 
 def create_delivery_data(request):
     data = {
@@ -71,3 +78,21 @@ def create_delivery(data):
 
         delivery.package = package
         delivery.save()
+
+        return delivery.delivery_id, delivery.receiving_days
+
+
+def update_status_to_in_transit(delivery_id):
+    with mysql_db.atomic():
+        delivery = Delivery.get(Delivery.delivery_id == delivery_id)
+        delivery.delivery_status = 'В дорозі'
+        delivery.save()
+        logger.info(f"\nDelivery ID {delivery_id}: Status updated to 'В дорозі'.")
+
+
+def update_status_to_ready_for_pickup(delivery_id):
+    with mysql_db.atomic():
+        delivery = Delivery.get(Delivery.delivery_id == delivery_id)
+        delivery.delivery_status = 'Готове до отримання'
+        delivery.save()
+        logger.info(f"Delivery ID {delivery_id}: Status updated to 'Готове до отримання'.\n")

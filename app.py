@@ -1,7 +1,9 @@
 import secrets
 import logging
+from datetime import timedelta
 
 from flask import Flask, render_template, request, redirect, url_for, session, flash
+from flask_apscheduler import APScheduler
 
 from functions.create_delivery import *
 from models.city import *
@@ -15,6 +17,18 @@ from flask_login import current_user, LoginManager, login_user, logout_user
 app = Flask(__name__)
 app.secret_key = secrets.token_hex()
 login_manager = LoginManager(app)
+
+
+# Налаштування для запуску "завдань за розкладом"
+class Config:
+    SCHEDULER_API_ENABLED = True
+
+
+app.config.from_object(Config())
+
+scheduler = APScheduler()
+scheduler.init_app(app)
+scheduler.start()
 
 
 @app.route('/')
@@ -171,8 +185,24 @@ def create_page():
             flash('Введено помилкові дані!', 'danger')
             return redirect(url_for('create_page'))
         try:
-            create_delivery(data)
+            delivery_id, receiving_days = create_delivery(data)
             flash('Бандеролька успішно відправлена!', 'success')
+
+            # Розрахунок часу для зміни статусу
+            sending_time = datetime.now()
+            in_transit_time = sending_time + timedelta(minutes=0.5)
+            ready_for_pickup_time = sending_time + timedelta(minutes=receiving_days)
+
+            # Логування створення завдань
+            app.logger.info(f"\nDelivery ID {delivery_id}: Scheduled 'В дорозі' status change at {in_transit_time}.")
+            app.logger.info(
+                f"Delivery ID {delivery_id}: Scheduled 'Готове до отримання' status change at {ready_for_pickup_time}.\n")
+
+            # Запуск запланованих завдань
+            scheduler.add_job(func=update_status_to_in_transit, trigger='date', run_date=in_transit_time,
+                              args=[delivery_id], id=f'in_transit_{delivery_id}')
+            scheduler.add_job(func=update_status_to_ready_for_pickup, trigger='date', run_date=ready_for_pickup_time,
+                              args=[delivery_id], id=f'ready_for_pickup_{delivery_id}')
         except Exception as e:
             flash(f'При відправлені бандерольки сталася помилка: {e}', 'danger')
 
