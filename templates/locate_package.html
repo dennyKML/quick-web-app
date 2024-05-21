@@ -96,7 +96,10 @@
                         <p class="single-sending-body-group-label">Куди</p>
                         <p class="single-sending-body-group-label">Дата відправлення</p>
                         <p class="single-sending-body-group-label">Дата отримання</p>
-                        <p class="single-sending-body-group-label">Розміри посилки</p>
+                        <p class="single-sending-body-group-label">
+                            Розміри посилки <br>
+                            (ШxВxД у мм, кг)
+                        </p>
                         <p class="single-sending-body-group-label">Опис посилки</p>
                         <p class="single-sending-body-group-label">Оголошена вартість</p>
                         <p class="single-sending-body-group-label">Вартість доставлення</p>
@@ -125,7 +128,8 @@
                             {% endif %}
                         </p>
                         <p class="single-sending-body-group-data" id="dimension-id">
-                            {{ delivery_details['width'] }}x{{ delivery_details['height'] }}x{{ delivery_details['length'] }}, {{ delivery_details['weight'] }} кг
+                            {{ delivery_details['width'] }}x{{ delivery_details['height'] }}x{{ delivery_details['length'] }}, {{ delivery_details['weight'] }} кг <br>
+                            ㅤ
                         </p>
                         <p class="single-sending-body-group-data" id="description-id">{{ delivery_details['description'] }}</p>
                         <p class="single-sending-body-group-data" id="estimated-id">{{ delivery_details['estimated_value'] }}</p>
@@ -151,7 +155,7 @@
                 </ul>
             </div>
 
-            <div class="footer__column">
+            <div class="footer__column" style="display: none">
                 <div class="footer__menu-header uniq-first">Підписатися на новини:</div>
 
                 <form action="#" class="form-email">
