@@ -135,7 +135,7 @@
                                 <p class="single-sending-body-group-data" id="to-id">{{ delivery.receiver_post_id.address }}, {{ delivery.receiver_post_id.postcode }}</p>
                                 <p class="single-sending-body-group-data" id="date-of-send-id">{{ delivery.sending_date }}</p>
                                 <p class="single-sending-body-group-data" id="date-of-receive-id">
-                                   {% if delivery.receiving_date != null %}
+                                   {% if delivery.receiving_date %}
                                         {{ delivery.receiving_date }}
                                    {% else %}
                                         Ще не отримано
@@ -145,7 +145,13 @@
                                     {{ delivery.packages[0].dimension_id.width }}x{{ delivery.packages[0].dimension_id.height }}x{{ delivery.packages[0].dimension_id.length }}, {{ delivery.packages[0].weight }} кг <br>
                             ㅤ
                                 </p>
-                                <p class="single-sending-body-group-data" id="description-id">{{ delivery.packages[0].description }}</p>
+                                <p class="single-sending-body-group-data" id="description-id">
+                                    {% if delivery.packages[0].description %}
+                                        {{ delivery.packages[0].description }}
+                                    {% else %}
+                                        ㅤ
+                                    {% endif %}
+                                </p>
                                 <p class="single-sending-body-group-data" id="estimated-id">{{ delivery.packages[0].estimated_value }}</p>
                                 <p class="single-sending-body-group-data" id="ship-cost-id">{{ delivery.delivery_cost }}</p>
                             </div>
@@ -198,7 +204,7 @@
                                 <p class="single-sending-body-group-data" id="to-id">{{ delivery.receiver_post_id.address }}, {{ delivery.receiver_post_id.postcode }}</p>
                                 <p class="single-sending-body-group-data" id="date-of-send-id">{{ delivery.sending_date }}</p>
                                 <p class="single-sending-body-group-data" id="date-of-receive-id">
-                                   {% if delivery.receiving_date != null %}
+                                   {% if delivery.receiving_date %}
                                         {{ delivery.receiving_date }}
                                    {% else %}
                                         Ще не отримано
@@ -208,7 +214,13 @@
                                     {{ delivery.packages[0].dimension_id.width }}x{{ delivery.packages[0].dimension_id.height }}x{{ delivery.packages[0].dimension_id.length }}, {{ delivery.packages[0].weight }} кг <br>
                                     ㅤ
                                 </p>
-                                <p class="single-sending-body-group-data" id="description-id">{{ delivery.packages[0].description }}</p>
+                                <p class="single-sending-body-group-data" id="description-id">
+                                    {% if delivery.packages[0].description %}
+                                        {{ delivery.packages[0].description }}
+                                    {% else %}
+                                        ㅤ
+                                    {% endif %}
+                                </p>
                                 <p class="single-sending-body-group-data" id="estimated-id">{{ delivery.packages[0].estimated_value }}</p>
                                 <p class="single-sending-body-group-data" id="ship-cost-id">{{ delivery.delivery_cost }}</p>
                             </div>
