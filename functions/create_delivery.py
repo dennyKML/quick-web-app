@@ -34,7 +34,7 @@ def create_delivery_data(request):
 
     for field in ['weight', 'width', 'height', 'length', 'estimated_val']:
         value = request.form[field]
-        if not is_valid_number(value):
+        if not is_valid_number(value, field):
             return None
         data[field] = float(value)
 
